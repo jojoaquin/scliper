@@ -9,6 +9,17 @@ const requiredValidation = (input: any, message: string) => {
   return true;
 };
 
+const validUrlValidation = (input: string, message: string) => {
+  if (!input) {
+    return message;
+  }
+
+  if (!input.startsWith("https://")) {
+    return "URL must start with https://";
+  }
+  return true;
+};
+
 const mustNumberValidation = (input: any) => {
   const parsed = parseInt(input);
   if (isNaN(parsed) || parsed <= 0) {
@@ -64,7 +75,7 @@ export class Question {
         "baseUrl",
         "Base URL link / e.g. 'https://www.scliper.com'",
         {
-          validate: (input) => requiredValidation(input, "URL is required"),
+          validate: (input) => validUrlValidation(input, "URL is required"),
         }
       );
       return baseUrl;
@@ -75,7 +86,7 @@ export class Question {
         "Base URL link / e.g. 'https://www.scliper.com/pages/'",
         {
           validate: (input: string) =>
-            requiredValidation(input, "URL is required"),
+            validUrlValidation(input, "URL is required"),
         }
       );
 
